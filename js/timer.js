@@ -79,4 +79,4 @@ function someTimer(seconds) {
         , 1000);
 }
 
-//someTimer(3600 * 25 * 10);
+// someTimer(3600 * 25 * 10);
