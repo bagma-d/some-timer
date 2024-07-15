@@ -1,10 +1,3 @@
-let timerParagraph = document.querySelector('.timer');
-let timerSeconds = document.querySelector('.timer__seconds');
-let timerMinutes = document.querySelector('.timer__minutes');
-let timerHours = document.querySelector('.timer__hours');
-let timerDays = document.querySelector('.timer__days');
-let timerYears = document.querySelector('.timer__years');
-
 function seconds2Intervals(seconds) {
     let timeIntervals = [0, 0, 0, 0, 0];
     let minutes, hours, days, years;
@@ -12,6 +5,8 @@ function seconds2Intervals(seconds) {
         minutes = Math.floor(seconds / 60);
         timeIntervals[3] = minutes;
         seconds %= 60;
+        timeIntervals[4] = seconds;
+    } else {
         timeIntervals[4] = seconds;
     }
     if (minutes >= 60) {
@@ -33,39 +28,19 @@ function seconds2Intervals(seconds) {
         timeIntervals[1] = days;
     }
 
-    /* let timeString = (years, days, hours, minutes, seconds) => {
-         let result = '';
-         if (years > 0) {
-             result = `${result}${years}y:`;
-         }
-         if (days >= 0) {
-             result = `${result}${days}d:`;
-         }
-         if (hours >= 0) {
-             result = hours > 9 ? `${result}${hours}:` :
-                 `${result}0${hours}h:`;
-         }
-         if (minutes >= 0) {
-             result = minutes > 9 ? `${result}${minutes}:` :
-                 `${result}0${minutes}:`;
-         }
-         if (seconds >= 0) {
-             result = seconds > 9 ? `${result}${seconds}` :
-                 `${result}0${seconds}`;
-         }
-         return result;
-     } */
-
-    // return timeString(years, days, hours, minutes, seconds);
-    console.log(timeIntervals);
     return timeIntervals;
 }
 
-function someTimer(seconds) {
+function someTimer(seconds, timerId) {
+
+    let newContainer = document.getElementById(timerId);
 
     setTimeout(() => {
-
-        // timerParagraph.innerHTML = seconds2Intervals(seconds);
+        let timerSeconds = newContainer.querySelector('.timer__seconds');
+        let timerMinutes = newContainer.querySelector('.timer__minutes');
+        let timerHours = newContainer.querySelector('.timer__hours');
+        let timerDays = newContainer.querySelector('.timer__days');
+        let timerYears = newContainer.querySelector('.timer__years');
         timerYears.innerHTML = seconds2Intervals(seconds)[0];
         timerDays.innerHTML = seconds2Intervals(seconds)[1];
         timerHours.innerHTML = seconds2Intervals(seconds)[2];
@@ -73,10 +48,8 @@ function someTimer(seconds) {
         timerSeconds.innerHTML = seconds2Intervals(seconds)[4];
         if (seconds > 0) {
             seconds--;
-            someTimer(seconds);
+            someTimer(seconds, timerId);
         }
     }
         , 1000);
 }
-
-// someTimer(3600 * 25 * 10);
