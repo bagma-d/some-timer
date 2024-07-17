@@ -136,12 +136,14 @@ function intervals2seconds() {
         +(yearsInputValue * 3600 * 24 * 365);
 }
 
+let timersIds = [];
 
 addTimerButton.onclick = () => {
     intervals2seconds();
     let parent = document.querySelector('body');
     // let newTimerId = String(Math.round(Math.random() * 100000));
     let newTimerId = Math.random();
+    timersIds.push(newTimerId);
     let timerContainer = document.createElement('div');
     timerContainer.className = "timer";
     timerContainer.id = newTimerId;
