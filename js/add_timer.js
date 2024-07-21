@@ -136,7 +136,7 @@ function intervals2seconds() {
         +(yearsInputValue * 3600 * 24 * 365);
 }
 
-let timersIds = [];
+// let timersIds = [];
 
 addTimerButton.onclick = () => {
     intervals2seconds();

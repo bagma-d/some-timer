@@ -1,46 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+let timersIds;
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM готов!");
+    let savedTimers = new Map();
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        savedTimers.set(key, localStorage.getItem(key));
+    }
+    // console.log(Array.from(savedTimers.keys()));
 
-<body>
-    <div class="new_timer">
-        <div class="timer__items">
-            <div class="set__item timer_years">
-                <button class="set__up">+</button>
-                <input class="set__input" placeholder="0Y">
-                <button class="set__down">-</button>
-            </div>
-            <div class="set__item timer_days">
-                <button class="set__up">+</button>
-                <input class="set__input" placeholder="0D">
-                <button class="set__down">-</button>
-            </div>
-            <div class="set__item timer_hours">
-                <button class="set__up">+</button>
-                <input class="set__input" placeholder="0H">
-                <button class="set__down">-</button>
-            </div>
-            <div class="set__item timer_minutes">
-                <button class="set__up">+</button>
-                <input class="set__input" placeholder="00m">
-                <button class="set__down">-</button>
-            </div>
-            <div class="set__item timer_seconds">
-                <button class="set__up">+</button>
-                <input class="set__input" placeholder="00s">
-                <button class="set__down">-</button>
-            </div>
-            <button class="set__ok">OK</button>
-        </div>
-    </div>
-    <!-- <div class="timer">
-        <div class="timer__items">
+
+    timersIds = Array.from(savedTimers.keys());
+    console.log(timersIds);
+    let parent = document.querySelector('body');
+
+    timersIds.forEach((e) => {
+        console.log(e);
+        restoreTimer(e);
+    });
+
+
+    function restoreTimer(timerId) {
+
+        let timerContainer = document.createElement('div');
+        timerContainer.className = "timer";
+        timerContainer.id = timerId;
+        let newTimerInnerHTML = `<div class="timer__items">
             <div class="timer__item timer__years">00</div>
             <div class="timer__item timer__days">00</div>
             <div class="timer__item timer__hours">00</div>
@@ -85,13 +70,9 @@
                     </g>
                 </g>
             </svg>
-        </button>
-    </div>
-    <p class="timer"></p> -->
-    <script src="js/timer.js"></script>
-    <script src="js/add_timer.js"></script>
-    <script src="js/save_timer.js"></script>
-    <script src="js/load_timer.js"></script>
-</body>
-
-</html>
+        </button>`;
+        timerContainer.innerHTML = newTimerInnerHTML;
+        parent.appendChild(timerContainer);
+        someTimer(savedTimers.get(timerId), timerId);
+    }
+});
