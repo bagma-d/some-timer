@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(e);
         restoreTimer(e);
     });
+    // что тут значит e? Лучше использовать что-то вроде id
+    // timersIds.forEach((id) => {
+    //     console.log(id);
+    //     restoreTimer(id);
+    // });
+    // e - так обозначают error традиционно
 
 
     function restoreTimer(timerId) {
