@@ -1,3 +1,5 @@
+// Почему все let? Ты же не изменяешь потом переменные. Надо на const поменять где возможно (элементы)
+// Надо рассмотреть вариант найти только родители элементы, а потомков находить через делегирование событий (всплытие)
 let setYearsElem = document.querySelector('.set__item.timer_years');
 let increaseYearsButton = setYearsElem.querySelector('.set__up');
 let decreaseYearsButton = setYearsElem.querySelector('.set__down');
@@ -28,6 +30,11 @@ let decreaseSecondsButton = setSecondsElem.querySelector('.set__down');
 let secondsInputElement = setSecondsElem.querySelector('.set__input');
 let secondsInputValue = setSecondsElem.querySelector('.set__input').value;
 
+// элементы, которые используются в js часто ищутся через id. И так, и так как по мне норм, но тут я бы через id тоже сделал
+// потому что такие селекторы ".set__item.timer_hours" выглядят громоздкими
+// Например, let setHoursElem = document.querySelector('#setHoursElem');
+
+// почему тут пишешь в function declaration виде?
 function increaseYears() {
     ++yearsInputValue;
     yearsInputElement.value = yearsInputValue;
@@ -43,8 +50,10 @@ function changeYears() {
 }
 
 increaseYearsButton.addEventListener("click", increaseYears);
+// Тут нормально и понятно, но обычно хэндлеры называют так элементСобытиеHandler или handЭлементСобытие. А в хэндлере уже increaseYears
 decreaseYearsButton.addEventListener("click", decreaseYears);
 yearsInputElement.addEventListener("input", changeYears);
+// чем событие input отличается от change, keyup, keydown - поэкспериментируй.
 
 function increaseDays() {
     ++daysInputValue;
@@ -129,6 +138,7 @@ let addTimerButton = document.querySelector('.set__ok');
 let seconds2newTimer;
 
 function intervals2seconds() {
+    // 2 лучше писать как To
     seconds2newTimer = +secondsInputValue +
         +(minutesInputValue * 60) +
         +(hoursInputValue * 3600) +
@@ -142,12 +152,17 @@ addTimerButton.onclick = () => {
     intervals2seconds();
     let parent = document.querySelector('body');
     // let newTimerId = String(Math.round(Math.random() * 100000));
-    let newTimerId = Math.random();
+    let newTimerId = Math.random(); // могут совпасть id. Посмотри библиотеки uuid
     timersIds.push(newTimerId);
     let timerContainer = document.createElement('div');
     timerContainer.className = "timer";
     timerContainer.id = newTimerId;
-    let newTimerInnerHTML = `<div class="timer__items">
+    // Можно в html создать template и из него брать, посмотри как это делать
+    // но нередко делают именно так как ты
+
+    // Так переносы можно делать, вроде работает правильно
+    let newTimerInnerHTML = `\
+        <div class="timer__items">
             <div class="timer__item timer__years">00</div>
             <div class="timer__item timer__days">00</div>
             <div class="timer__item timer__hours">00</div>
@@ -193,6 +208,9 @@ addTimerButton.onclick = () => {
                 </g>
             </svg>
         </button>`;
+    // svg - зачем инлайново вставлять? Какие еще есть способы?
+
+
     timerContainer.innerHTML = newTimerInnerHTML;
     parent.appendChild(timerContainer);
     someTimer(seconds2newTimer, newTimerId);

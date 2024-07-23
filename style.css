@@ -17,6 +17,7 @@
 
 .set__up,
 .set__down {
+    /* Можно сделать класс reset-button и туда забросить стили по сбросу дефолтной стилизации кнопок и инпутов*/
     width: 40%;
     align-self: center;
     border: 1px solid black;
@@ -36,6 +37,7 @@
     width: 40px;
     height: 30px;
     border-radius: 10px;
+    /* Вместо align-self я обычно прописываю display: flex и выравниваю контент через флексы. С align-self у меня были какие-то проблемы всегда, но так тоже можно */
     align-self: center;
 }
 
@@ -55,6 +57,7 @@
 }
 
 .timer__item::before {
+    /* Ты тут берешь содержимое из data-set? Прикольно */
     content: attr(data-title);
     display: block;
     position: absolute;
@@ -80,6 +83,7 @@
     padding-bottom: 15px;
     text-align: center;
     font-size: 48px;
+    /* переписываешь padding-bottom выше */
     padding: 0;
 }
 
@@ -87,6 +91,7 @@
 .delete__button {
     width: 35px;
     height: 35px;
+    /* Возможно без align-self сделать? Для меня бывает неочевидно как это повлияет при дальнейшей стилизации. Но так норм */
     align-self: center;
     margin: 0 5px;
 }
